@@ -1,19 +1,27 @@
 #!/bin/bash
 sudo apt-get update 
-sudo apt-get remove ffmpeg -y
-sudo apt-get remove x265 -y
+sudo apt-get purge ffmpeg -y
+sudo apt-get purge x265 -y
 sudo apt-get install ffmpeg -y
 sudo apt-get install x265 -y
-a=1
+if [[ ("$1" != "veryslow") && ("$1" != "slower") && ("$1" != "slow") && ("$1" != "medium") && ("$1" != "fast") && ("$1" != "faster") && ("$1" != "veryfast") && ("$1" != "superfast") && ("$1" != "ultrafast") ]]
+	then
+		quality="faster"
+else
+		quality=$1
+fi
 for f in *; do
-	if [ ${f: -4} == ".mp4" ]
+	if [[ (${f: -4} == ".mp4") || (${f: -4} == ".avi") ]]
 		then
-			a=$((a + 1))
-			b=".mp4"
-			newname=$a$b
-			time ffmpeg -threads 8 -i $f -c:v libx265 -preset faster -quality 1 -c:a aac -b:a 128k -strict -2 "compressed"$f -y
+			divisor=1000000
+			oldSize=$(stat --printf="%s" $f)
+			oldSize=$((oldSize / divisor))
+			time ffmpeg -threads 8 -i $f -c:v libx265 -preset $quality -quality 1 -c:a aac -b:a 128k -strict -2 "compressed"$f -y
 			oldName=$f
 			rm $f
 			mv "compressed"$f $oldName
+			newSize=$(stat --printf="%s" $oldName)
+			newSize=$((newSize / divisor))
+			echo "Original Size: $oldSize mb New Size: $newSize mb"
 	fi
 done
