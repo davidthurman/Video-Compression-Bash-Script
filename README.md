@@ -5,16 +5,16 @@ As long as you are running Linux, you can place this file in a directory with as
 
 You can run options with the script to use your desired compression speed. The higher the speed, the lower the quality. Depending on the video, you might not notice much difference.
 
-Available options:\n
-ultrafast\n
-superfast\n
-veryfast\n
-faster\n
-fast\n
-medium\n
-slow\n
-slower\n
-veryslow\n
+Available options:</br>
+ultrafast</br>
+superfast</br>
+veryfast</br>
+faster</br>
+fast</br>
+medium</br>
+slow</br>
+slower</br>
+veryslow</br>
 
 Example from Console:
 
