@@ -8,12 +8,9 @@ a=1
 for f in *; do
 	if [ ${f: -4} == ".mp4" ]
 		then
-			echo $a
 			a=$((a + 1))
 			b=".mp4"
 			newname=$a$b
-			echo "File -> $f"
-			echo "$newname"
 			time ffmpeg -threads 8 -i $f -c:v libx265 -preset faster -quality 1 -c:a aac -b:a 128k -strict -2 "compressed"$f -y
 			oldName=$f
 			rm $f
